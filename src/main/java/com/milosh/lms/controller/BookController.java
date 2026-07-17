@@ -28,7 +28,9 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) {
+
         BookDTO saved = bookService.addBook(bookDTO);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
@@ -39,7 +41,9 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+
         bookService.deleteBook(id);
+
         return ResponseEntity.noContent().build();
     }
 }

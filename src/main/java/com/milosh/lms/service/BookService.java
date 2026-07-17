@@ -17,7 +17,8 @@ public class BookService {
     private final BookRepository bookRepository;
 
     private Book getBookEntity(Long id) {
-        return bookRepository.findById(id).orElseThrow(() -> new NoSuchBookException("No such book found"));
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new NoSuchBookException("No such book found"));
     }
 
     public List<BookDTO> getBooks() {
