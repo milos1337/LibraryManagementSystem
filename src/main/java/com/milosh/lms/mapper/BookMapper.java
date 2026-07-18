@@ -11,7 +11,7 @@ public class BookMapper {
 
         dto.setId(book.getId());
         dto.setTitle(book.getTitle());
-        dto.setIsbn(book.getIsbn());
+        dto.setAuthor(book.getAuthor());
         dto.setPublicationYear(book.getPublicationYear());
         dto.setTotalCopies(book.getTotalCopies());
         dto.setAvailableCopies(book.getAvailableCopies());
@@ -25,7 +25,7 @@ public class BookMapper {
 
         book.setId(dto.getId());
         book.setTitle(dto.getTitle());
-        book.setIsbn(dto.getIsbn());
+        book.setAuthor(dto.getAuthor());
         book.setPublicationYear(dto.getPublicationYear());
         book.setTotalCopies(dto.getTotalCopies());
         book.setAvailableCopies(dto.getAvailableCopies());

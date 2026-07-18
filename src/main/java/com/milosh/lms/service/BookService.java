@@ -33,6 +33,13 @@ public class BookService {
         return BookMapper.toDTO(book);
     }
 
+    public List<BookDTO> getBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author)
+                .stream()
+                .map(BookMapper::toDTO)
+                .toList();
+    }
+
     public BookDTO addBook(BookDTO bookDTO) {
         Book saved = bookRepository.save(BookMapper.toEntity(bookDTO));
         return BookMapper.toDTO(saved);
@@ -42,7 +49,7 @@ public class BookService {
         Book book = getBookEntity(id);
 
         book.setTitle(bookDTO.getTitle());
-        book.setIsbn(bookDTO.getIsbn());
+        book.setAuthor(bookDTO.getAuthor());
         book.setPublicationYear(bookDTO.getPublicationYear());
         book.setTotalCopies(bookDTO.getTotalCopies());
         book.setAvailableCopies(bookDTO.getAvailableCopies());

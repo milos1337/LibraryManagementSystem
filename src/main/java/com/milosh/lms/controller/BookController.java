@@ -26,6 +26,11 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
 
+    @GetMapping("/author")
+    public ResponseEntity<List<BookDTO>> getBooksByAuthor(@RequestParam String author) {
+        return ResponseEntity.ok(bookService.getBooksByAuthor(author));
+    }
+
     @PostMapping
     public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) {
 
