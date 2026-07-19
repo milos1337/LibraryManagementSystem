@@ -17,18 +17,16 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getBooks() {
-        return ResponseEntity.ok(bookService.getBooks());
+    public ResponseEntity<List<BookDTO>> searchBooks(
+            @RequestParam(required = false) String author,
+            @RequestParam(required = false) String title
+    ) {
+        return ResponseEntity.ok(bookService.searchBooks(author, title));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BookDTO> getBookById(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.getBookById(id));
-    }
-
-    @GetMapping("/author")
-    public ResponseEntity<List<BookDTO>> getBooksByAuthor(@RequestParam String author) {
-        return ResponseEntity.ok(bookService.getBooksByAuthor(author));
     }
 
     @PostMapping

@@ -21,7 +21,29 @@ public class BookService {
                 .orElseThrow(() -> new NoSuchBookException("No such book found"));
     }
 
-    public List<BookDTO> getBooks() {
+    public List<BookDTO> searchBooks(String author, String title) {
+
+        if (author != null && title != null) {
+            return bookRepository.findByAuthorAndTitle(author, title)
+                    .stream()
+                    .map(BookMapper::toDTO)
+                    .toList();
+        }
+
+        if (author != null) {
+            return bookRepository.findByAuthor(author)
+                    .stream()
+                    .map(BookMapper::toDTO)
+                    .toList();
+        }
+
+        if (title != null) {
+            return bookRepository.findByTitle(title)
+                    .stream()
+                    .map(BookMapper::toDTO)
+                    .toList();
+        }
+
         return bookRepository.findAll()
                 .stream()
                 .map(BookMapper::toDTO)
@@ -29,15 +51,7 @@ public class BookService {
     }
 
     public BookDTO getBookById(Long id) {
-        Book book = getBookEntity(id);
-        return BookMapper.toDTO(book);
-    }
-
-    public List<BookDTO> getBooksByAuthor(String author) {
-        return bookRepository.findByAuthor(author)
-                .stream()
-                .map(BookMapper::toDTO)
-                .toList();
+        return BookMapper.toDTO(getBookEntity(id));
     }
 
     public BookDTO addBook(BookDTO bookDTO) {
