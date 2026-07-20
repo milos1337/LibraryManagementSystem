@@ -1,15 +1,16 @@
 package com.milosh.lms.mapper;
 
-import com.milosh.lms.dto.BookDTO;
+import com.milosh.lms.dto.BookResponseDTO;
+import com.milosh.lms.dto.CreateBookDTO;
 import com.milosh.lms.entity.Book;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BookMapper {
 
-    public BookDTO toDTO(Book book) {
+    public BookResponseDTO toDTO(Book book) {
 
-        BookDTO dto = new BookDTO();
+        BookResponseDTO dto = new BookResponseDTO();
 
         dto.setId(book.getId());
         dto.setTitle(book.getTitle());
@@ -22,17 +23,15 @@ public class BookMapper {
         return dto;
     }
 
-    public Book toEntity(BookDTO dto) {
+    public Book toEntity(CreateBookDTO dto) {
 
         Book book = new Book();
 
-        book.setId(dto.getId());
         book.setTitle(dto.getTitle());
         book.setAuthor(dto.getAuthor());
         book.setIsbn(dto.getIsbn());
         book.setPublicationYear(dto.getPublicationYear());
         book.setTotalCopies(dto.getTotalCopies());
-        book.setAvailableCopies(dto.getAvailableCopies());
 
         return book;
     }

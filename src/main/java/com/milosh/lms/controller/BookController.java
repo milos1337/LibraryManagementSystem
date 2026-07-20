@@ -1,6 +1,7 @@
 package com.milosh.lms.controller;
 
-import com.milosh.lms.dto.BookDTO;
+import com.milosh.lms.dto.BookResponseDTO;
+import com.milosh.lms.dto.CreateBookDTO;
 import com.milosh.lms.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> searchBooks(
+    public ResponseEntity<List<BookResponseDTO>> searchBooks(
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String title
     ) {
@@ -25,21 +26,21 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<BookDTO> getBookById(@PathVariable Long id) {
+    public ResponseEntity<BookResponseDTO> getBookById(@PathVariable Long id) {
         return ResponseEntity.ok(bookService.getBookById(id));
     }
 
     @PostMapping
-    public ResponseEntity<BookDTO> addBook(@RequestBody BookDTO bookDTO) {
+    public ResponseEntity<BookResponseDTO> addBook(@RequestBody CreateBookDTO bookDTO) {
 
-        BookDTO saved = bookService.addBook(bookDTO);
+        BookResponseDTO saved = bookService.addBook(bookDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDTO> updateBook(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
-        return ResponseEntity.ok(bookService.updateBook(id, bookDTO));
+    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody BookResponseDTO bookResponseDTO) {
+        return ResponseEntity.ok(bookService.updateBook(id, bookResponseDTO));
     }
 
     @DeleteMapping("/{id}")

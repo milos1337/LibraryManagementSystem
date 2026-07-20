@@ -1,6 +1,7 @@
 package com.milosh.lms.service;
 
-import com.milosh.lms.dto.BookDTO;
+import com.milosh.lms.dto.BookResponseDTO;
+import com.milosh.lms.dto.CreateBookDTO;
 import com.milosh.lms.entity.Book;
 import com.milosh.lms.exception.BookAlreadyExistsException;
 import com.milosh.lms.exception.BookNotFoundException;
@@ -23,7 +24,7 @@ public class BookService {
                 .orElseThrow(() -> new BookNotFoundException("Book with id " + id + " not found."));
     }
 
-    public List<BookDTO> searchBooks(String author, String title) {
+    public List<BookResponseDTO> searchBooks(String author, String title) {
 
         if (author != null && title != null) {
             return bookRepository.findByAuthorAndTitle(author, title)
@@ -52,11 +53,11 @@ public class BookService {
                 .toList();
     }
 
-    public BookDTO getBookById(Long id) {
+    public BookResponseDTO getBookById(Long id) {
         return mapper.toDTO(getBookEntity(id));
     }
 
-    public BookDTO addBook(BookDTO bookDTO) {
+    public BookResponseDTO addBook(CreateBookDTO bookDTO) {
 
         if (bookRepository.existsByIsbn(bookDTO.getIsbn())) {
             throw new BookAlreadyExistsException(
@@ -66,19 +67,20 @@ public class BookService {
 
         Book book = mapper.toEntity(bookDTO);
 
+        book.setAvailableCopies(bookDTO.getTotalCopies());
+
         Book saved = bookRepository.save(book);
 
         return mapper.toDTO(saved);
     }
 
-    public BookDTO updateBook(Long id, BookDTO bookDTO) {
+    public BookResponseDTO updateBook(Long id, BookResponseDTO bookResponseDTO) {
         Book book = getBookEntity(id);
 
-        book.setTitle(bookDTO.getTitle());
-        book.setAuthor(bookDTO.getAuthor());
-        book.setPublicationYear(bookDTO.getPublicationYear());
-        book.setTotalCopies(bookDTO.getTotalCopies());
-        book.setAvailableCopies(bookDTO.getAvailableCopies());
+        book.setTitle(bookResponseDTO.getTitle());
+        book.setAuthor(bookResponseDTO.getAuthor());
+        book.setPublicationYear(bookResponseDTO.getPublicationYear());
+        book.setTotalCopies(bookResponseDTO.getTotalCopies());
 
         return mapper.toDTO(bookRepository.save(book));
     }
