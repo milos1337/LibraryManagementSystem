@@ -29,10 +29,7 @@ public class UserService {
     }
 
     public UserDTO getUserById(Long id) {
-
-        User user = getUserEntity(id);
-
-        return UserMapper.toDTO(user);
+        return UserMapper.toDTO(getUserEntity(id));
     }
 
     public UserDTO createUser(UserDTO userDTO) {

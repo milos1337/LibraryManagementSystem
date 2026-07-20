@@ -2,10 +2,12 @@ package com.milosh.lms.mapper;
 
 import com.milosh.lms.dto.BookDTO;
 import com.milosh.lms.entity.Book;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookMapper {
 
-    public static BookDTO toDTO(Book book) {
+    public BookDTO toDTO(Book book) {
 
         BookDTO dto = new BookDTO();
 
@@ -20,7 +22,7 @@ public class BookMapper {
         return dto;
     }
 
-    public static Book toEntity(BookDTO dto) {
+    public Book toEntity(BookDTO dto) {
 
         Book book = new Book();
 
