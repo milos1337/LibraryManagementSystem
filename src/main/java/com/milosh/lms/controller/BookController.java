@@ -3,6 +3,7 @@ package com.milosh.lms.controller;
 import com.milosh.lms.dto.BookResponseDTO;
 import com.milosh.lms.dto.CreateBookDTO;
 import com.milosh.lms.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookResponseDTO> addBook(@RequestBody CreateBookDTO bookDTO) {
+    public ResponseEntity<BookResponseDTO> addBook(@RequestBody @Valid CreateBookDTO bookDTO) {
 
         BookResponseDTO saved = bookService.addBook(bookDTO);
 
@@ -39,7 +40,7 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody BookResponseDTO bookResponseDTO) {
+    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody @Valid BookResponseDTO bookResponseDTO) {
         return ResponseEntity.ok(bookService.updateBook(id, bookResponseDTO));
     }
 

@@ -79,6 +79,7 @@ public class BookService {
 
         book.setTitle(bookResponseDTO.getTitle());
         book.setAuthor(bookResponseDTO.getAuthor());
+        book.setIsbn(bookResponseDTO.getIsbn());
         book.setPublicationYear(bookResponseDTO.getPublicationYear());
         book.setTotalCopies(bookResponseDTO.getTotalCopies());
 
