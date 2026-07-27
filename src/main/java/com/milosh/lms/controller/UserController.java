@@ -1,9 +1,11 @@
 package com.milosh.lms.controller;
 
+import com.milosh.lms.dto.ChangePasswordDTO;
 import com.milosh.lms.dto.CreateUserDTO;
 import com.milosh.lms.dto.UpdateUserDTO;
 import com.milosh.lms.dto.UserResponseDTO;
 import com.milosh.lms.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponseDTO> createUser(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody CreateUserDTO createUserDTO) {
 
         UserResponseDTO saved = userService.createUser(createUserDTO);
 
@@ -37,8 +39,16 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserDTO updateUserDTO) {
         return ResponseEntity.ok(userService.updateUser(id, updateUserDTO));
+    }
+
+    @PatchMapping("/{id}/password")
+    public ResponseEntity<Void> changePassword(@PathVariable Long id, @Valid @RequestBody ChangePasswordDTO changePasswordDTO) {
+
+        userService.changePassword(id, changePasswordDTO);
+
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")

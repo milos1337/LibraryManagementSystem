@@ -1,9 +1,11 @@
 package com.milosh.lms.service;
 
+import com.milosh.lms.dto.ChangePasswordDTO;
 import com.milosh.lms.dto.CreateUserDTO;
 import com.milosh.lms.dto.UpdateUserDTO;
 import com.milosh.lms.dto.UserResponseDTO;
 import com.milosh.lms.entity.User;
+import com.milosh.lms.exception.IncorrectPasswordException;
 import com.milosh.lms.exception.NoSuchUserException;
 import com.milosh.lms.mapper.UserMapper;
 import com.milosh.lms.repository.UserRepository;
@@ -42,6 +44,18 @@ public class UserService {
         userRepository.save(user);
 
         return mapper.toDTO(user);
+    }
+
+    public void changePassword(Long id, ChangePasswordDTO changePasswordDTO) {
+
+        User user = getUserEntity(id);
+
+        if (!user.getPassword().equals(changePasswordDTO.getOldPassword())) {
+            throw new IncorrectPasswordException("Old password is incorrect");
+        }
+
+        user.setPassword(changePasswordDTO.getNewPassword());
+        userRepository.save(user);
     }
 
     public UserResponseDTO updateUser(Long id, UpdateUserDTO updateUserDTO) {
