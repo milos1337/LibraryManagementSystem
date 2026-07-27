@@ -10,14 +10,18 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class CreateBookDTO {
-    @NotBlank(message = "Title can't be empty")
+    @NotBlank(message = "Title is required")
     private String title;
-    @NotBlank(message = "Author can't be empty")
+
+    @NotBlank(message = "Author is required")
     private String author;
-    @NotBlank(message = "ISBN can't be empty")
+
+    @NotBlank(message = "ISBN is required")
     private String isbn;
+
     @NotNull(message = "Book publication year is required")
     private Integer publicationYear;
+
     @NotNull(message = "Number of total copies is required")
     private Integer totalCopies;
 }
