@@ -1,6 +1,8 @@
 package com.milosh.lms.controller;
 
-import com.milosh.lms.dto.UserDTO;
+import com.milosh.lms.dto.CreateUserDTO;
+import com.milosh.lms.dto.UpdateUserDTO;
+import com.milosh.lms.dto.UserResponseDTO;
 import com.milosh.lms.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,26 +19,26 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getUsers() {
+    public ResponseEntity<List<UserResponseDTO>> getUsers() {
         return ResponseEntity.ok(userService.getUsers());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody CreateUserDTO createUserDTO) {
 
-        UserDTO saved = userService.createUser(userDTO);
+        UserResponseDTO saved = userService.createUser(createUserDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.updateUser(id, userDTO));
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @RequestBody UpdateUserDTO updateUserDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, updateUserDTO));
     }
 
     @DeleteMapping("/{id}")

@@ -1,29 +1,30 @@
 package com.milosh.lms.mapper;
 
-import com.milosh.lms.dto.UserDTO;
+import com.milosh.lms.dto.CreateUserDTO;
+import com.milosh.lms.dto.UserResponseDTO;
 import com.milosh.lms.entity.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper {
 
-    public static UserDTO toDTO(User user) {
+    public UserResponseDTO toDTO(User user) {
 
-        UserDTO dto = new UserDTO();
+        UserResponseDTO dto = new UserResponseDTO();
 
         dto.setId(user.getId());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
         dto.setEnabled(user.isEnabled());
 
         return dto;
     }
 
-    public static User toEntity(UserDTO dto) {
+    public User toEntity(CreateUserDTO dto) {
 
         User user = new User();
 
-        user.setId(dto.getId());
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());

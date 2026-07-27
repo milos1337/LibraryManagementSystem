@@ -1,6 +1,8 @@
 package com.milosh.lms.service;
 
-import com.milosh.lms.dto.UserDTO;
+import com.milosh.lms.dto.CreateUserDTO;
+import com.milosh.lms.dto.UpdateUserDTO;
+import com.milosh.lms.dto.UserResponseDTO;
 import com.milosh.lms.entity.User;
 import com.milosh.lms.exception.NoSuchUserException;
 import com.milosh.lms.mapper.UserMapper;
@@ -15,43 +17,43 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper mapper;
 
     public User getUserEntity(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchUserException("No such user found."));
     }
 
-    public List<UserDTO> getUsers() {
+    public List<UserResponseDTO> getUsers() {
         return userRepository.findAll()
                 .stream()
-                .map(UserMapper::toDTO)
+                .map(mapper::toDTO)
                 .toList();
     }
 
-    public UserDTO getUserById(Long id) {
-        return UserMapper.toDTO(getUserEntity(id));
+    public UserResponseDTO getUserById(Long id) {
+        return mapper.toDTO(getUserEntity(id));
     }
 
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserResponseDTO createUser(CreateUserDTO createUserDTO) {
 
-        User user = UserMapper.toEntity(userDTO);
+        User user = mapper.toEntity(createUserDTO);
 
         userRepository.save(user);
 
-        return UserMapper.toDTO(user);
+        return mapper.toDTO(user);
     }
 
-    public UserDTO updateUser(Long id, UserDTO userDTO) {
+    public UserResponseDTO updateUser(Long id, UpdateUserDTO updateUserDTO) {
 
         User user = getUserEntity(id);
 
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setEnabled(userDTO.isEnabled());
+        user.setFirstName(updateUserDTO.getFirstName());
+        user.setLastName(updateUserDTO.getLastName());
+        user.setEmail(updateUserDTO.getEmail());
+        user.setEnabled(updateUserDTO.isEnabled());
 
-        return UserMapper.toDTO(userRepository.save(user));
+        return mapper.toDTO(userRepository.save(user));
     }
 
     public void deleteUser(Long id) {
