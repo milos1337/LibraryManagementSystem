@@ -2,6 +2,7 @@ package com.milosh.lms.service;
 
 import com.milosh.lms.dto.BookResponseDTO;
 import com.milosh.lms.dto.CreateBookDTO;
+import com.milosh.lms.dto.UpdateBookDTO;
 import com.milosh.lms.entity.Book;
 import com.milosh.lms.exception.BookAlreadyExistsException;
 import com.milosh.lms.exception.BookNotFoundException;
@@ -74,14 +75,14 @@ public class BookService {
         return mapper.toDTO(saved);
     }
 
-    public BookResponseDTO updateBook(Long id, BookResponseDTO bookResponseDTO) {
+    public BookResponseDTO updateBook(Long id, UpdateBookDTO updateBookDTO) {
         Book book = getBookEntity(id);
 
-        book.setTitle(bookResponseDTO.getTitle());
-        book.setAuthor(bookResponseDTO.getAuthor());
-        book.setIsbn(bookResponseDTO.getIsbn());
-        book.setPublicationYear(bookResponseDTO.getPublicationYear());
-        book.setTotalCopies(bookResponseDTO.getTotalCopies());
+        book.setTitle(updateBookDTO.getTitle());
+        book.setAuthor(updateBookDTO.getAuthor());
+        book.setIsbn(updateBookDTO.getIsbn());
+        book.setPublicationYear(updateBookDTO.getPublicationYear());
+        book.setTotalCopies(updateBookDTO.getTotalCopies());
 
         return mapper.toDTO(bookRepository.save(book));
     }

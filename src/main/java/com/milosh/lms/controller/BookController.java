@@ -2,6 +2,7 @@ package com.milosh.lms.controller;
 
 import com.milosh.lms.dto.BookResponseDTO;
 import com.milosh.lms.dto.CreateBookDTO;
+import com.milosh.lms.dto.UpdateBookDTO;
 import com.milosh.lms.service.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +41,8 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody @Valid BookResponseDTO bookResponseDTO) {
-        return ResponseEntity.ok(bookService.updateBook(id, bookResponseDTO));
+    public ResponseEntity<BookResponseDTO> updateBook(@PathVariable Long id, @RequestBody @Valid UpdateBookDTO updateBookDTO) {
+        return ResponseEntity.ok(bookService.updateBook(id, updateBookDTO));
     }
 
     @DeleteMapping("/{id}")
