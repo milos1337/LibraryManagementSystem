@@ -76,20 +76,25 @@ public class BookService {
     }
 
     public BookResponseDTO updateBook(Long id, UpdateBookDTO updateBookDTO) {
+
         Book book = getBookEntity(id);
 
         book.setTitle(updateBookDTO.getTitle());
         book.setAuthor(updateBookDTO.getAuthor());
         book.setIsbn(updateBookDTO.getIsbn());
         book.setPublicationYear(updateBookDTO.getPublicationYear());
+
+        int difference = updateBookDTO.getTotalCopies() - book.getTotalCopies();
+
         book.setTotalCopies(updateBookDTO.getTotalCopies());
+        book.setAvailableCopies(book.getAvailableCopies() + difference);
+
 
         return mapper.toDTO(bookRepository.save(book));
     }
 
     public void deleteBook(Long id) {
-        Book book = getBookEntity(id);
-
+        getBookEntity(id);
         bookRepository.deleteById(id);
     }
 }

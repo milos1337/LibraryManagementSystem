@@ -21,7 +21,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper mapper;
 
-    public User getUserEntity(Long id) {
+    private User getUserEntity(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchUserException("No such user found."));
     }
